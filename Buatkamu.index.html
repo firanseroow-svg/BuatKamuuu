@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Romantic Typing Animation + Music</title>
+
+<!-- Import font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        background: radial-gradient(circle, #ff8ca3, #ff476a, #c0003a);
+        color: #ffffff;
+        font-family: "Poppins", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 40px;
+        box-sizing: border-box;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    /* Tombol */
+    #btnLove {
+        padding: 18px 38px;
+        font-size: 22px;
+        border-radius: 15px;
+        border: none;
+        background: #ffffff;
+        color: #ff004c;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0px 0px 18px rgba(255, 255, 255, 0.7);
+        transition: 0.3s;
+        font-family: "Poppins", sans-serif;
+    }
+    #btnLove:hover {
+        transform: scale(1.1);
+        background: #ffe6ec;
+    }
+
+    /* Teks */
+    #text {
+        font-size: 22px;
+        font-weight: 300;
+        max-width: 800px;
+        line-height: 1.6;
+        white-space: pre-line;
+        padding-right: 8px;
+        display: none;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* Efek love */
+    .heart {
+        position: fixed;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 30px;
+        animation: floatUp 4s linear forwards;
+        pointer-events: none;
+    }
+
+    @keyframes floatUp {
+        from { transform: translateY(0) scale(0.7); opacity: 1; }
+        to   { transform: translateY(-200px) scale(1.4); opacity: 0; }
+    }
+</style>
+</head>
+<body>
+
+<button id="btnLove" onclick="startLove()">Klik ini</button>
+<div id="text"></div>
+
+<!-- Musik -->
+<audio id="music" src="fourtwnty - Aku Tenang (Official Video) Gili Trawangan.mp3"></audio>
+
+<script>
+const message = `
+Aku beruntung bisa bertemu denganmu dan memiliki kamu.
+Di dunia yang penuh dengan jutaan manusia, Tuhan memilihkan satu nama yang akhirnya berhenti tepat di hatiku — kamu.
+
+Kamu datang bukan hanya sebagai seseorang yang singgah,
+tapi sebagai seseorang yang ingin tinggal.
+
+Terima kasih sudah hadir.
+Terima kasih sudah membuat semuanya terasa lebih indah.
+Bersama kamu, hal kecil pun terasa istimewa.
+
+Aku tidak tahu apa yang akan terjadi nanti,
+tapi satu hal yang pasti:
+
+Aku ingin terus berjalan bersamamu.
+Tanpa ragu, tanpa keraguan, hanya kamu.
+`;
+
+let idx = 0;
+
+// Saat tombol diklik
+function startLove() {
+    document.getElementById("btnLove").style.display = "none";
+    document.getElementById("text").style.display = "block";
+
+    // Mainkan musik
+    const music = document.getElementById("music");
+    music.volume = 0.7; // bisa kamu atur volumenya
+    music.play();
+
+    typeWriter();
+}
+
+// Efek mengetik
+function typeWriter() {
+    const element = document.getElementById("text");
+    if (idx < message.length) {
+        element.innerHTML += message.charAt(idx);
+        idx++;
+        setTimeout(typeWriter, 55);
+    } else {
+        startHearts();
+    }
+}
+
+// Efek love
+function startHearts() {
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerText = "❤️";
+
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = window.innerHeight + "px";
+        heart.style.fontSize = (Math.random() * 30 + 20) + "px";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 4000);
+    }, 300);
+}
+</script>
+
+</body>
+</html>
